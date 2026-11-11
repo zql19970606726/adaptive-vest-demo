@@ -241,6 +241,140 @@
       white-space: nowrap;
     }
 
+    .video-showcase {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+      gap: 24px;
+      align-items: center;
+      margin: 18px 0 24px;
+      padding: 24px;
+      overflow: hidden;
+      border-radius: 28px;
+      color: white;
+      background:
+        radial-gradient(circle at 92% 0%, rgba(87, 208, 185, .22), transparent 22rem),
+        linear-gradient(135deg, #102e2a, #064f49);
+      box-shadow: var(--shadow);
+    }
+
+    .video-copy .eyebrow {
+      margin-bottom: 8px;
+      color: #a8e6da;
+    }
+
+    .video-copy .eyebrow::before { background: #a8e6da; }
+
+    .video-copy h2 {
+      margin: 0;
+      font-size: clamp(25px, 4vw, 38px);
+      line-height: 1.25;
+      letter-spacing: -.025em;
+    }
+
+    .video-copy p {
+      margin: 12px 0 0;
+      color: #cce8e3;
+      font-size: 14px;
+    }
+
+    .video-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .video-meta span {
+      padding: 5px 9px;
+      border: 1px solid rgba(216, 246, 241, .22);
+      border-radius: 999px;
+      color: #dff7f2;
+      background: rgba(255, 255, 255, .08);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .video-frame {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 20px;
+      background: #081412;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .25);
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-frame video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #081412;
+      object-fit: contain;
+    }
+
+    .video-cover {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      color: white;
+      background: linear-gradient(180deg, rgba(5, 26, 23, .12), rgba(5, 26, 23, .64));
+      cursor: pointer;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+
+    .video-cover.is-hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .play-control {
+      display: grid;
+      width: 78px;
+      height: 78px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .5);
+      border-radius: 50%;
+      background: rgba(8, 116, 106, .88);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
+      backdrop-filter: blur(9px);
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .video-cover:hover .play-control {
+      background: #0b897d;
+      transform: scale(1.06);
+    }
+
+    .play-control svg { margin-left: 5px; }
+
+    .video-cover-text {
+      position: absolute;
+      right: 14px;
+      bottom: 13px;
+      left: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 11px;
+      border-radius: 11px;
+      color: white;
+      background: rgba(6, 25, 22, .72);
+      font-size: 12px;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+    }
+
+    .video-duration {
+      flex: 0 0 auto;
+      color: #c8eee8;
+      font-size: 10px;
+    }
+
     .demo-layout {
       display: grid;
       grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
@@ -840,6 +974,7 @@
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; }
       .hero-visual { min-height: 220px; }
+      .video-showcase { grid-template-columns: 1fr; }
       .demo-layout { grid-template-columns: minmax(300px, 420px) minmax(0, 1fr); gap: 15px; }
       .features { grid-template-columns: repeat(2, 1fr); }
     }
@@ -850,6 +985,8 @@
       .brand span:last-child { display: none; }
       .hero { margin-bottom: 18px; }
       .hero-visual { display: none; }
+      .video-showcase { margin-bottom: 18px; padding: 17px; border-radius: 22px; }
+      .video-copy p { margin-top: 8px; }
       .demo-layout { grid-template-columns: 1fr; }
       .phone { position: relative; top: auto; width: 100%; }
       .phone-screen { min-height: auto; }
@@ -866,6 +1003,9 @@
       h1 { font-size: 40px; }
       .hero-copy > p { margin-top: 12px; font-size: 15px; }
       .notice { padding: 11px 13px; }
+      .video-showcase { gap: 15px; }
+      .video-meta { margin-top: 11px; }
+      .play-control { width: 64px; height: 64px; }
       .panel { padding: 17px; border-radius: 20px; }
       .features { grid-template-columns: 1fr; }
       .feature { min-height: auto; }
@@ -920,8 +1060,46 @@
 
       <div class="notice" role="note">
         <strong>功能展示：</strong>
-        <span>下方位置、轨迹和微信消息均为交互模拟，点击三个彩色按键即可体验视频中的演示流程。</span>
+        <span>先点击播放作品实录；再使用下方页面体验定位轨迹、三色按键和家属微信通知。</span>
       </div>
+
+      <section class="video-showcase" aria-labelledby="videoTitle">
+        <div class="video-copy">
+          <div class="eyebrow">作品实录</div>
+          <h2 id="videoTitle">真实操作视频<br>点开即可观看</h2>
+          <p>从马甲按键触发，到手机端定位轨迹更新和微信消息通知，完整展示作品的实际使用过程。</p>
+          <div class="video-meta" aria-label="视频信息">
+            <span>00:58</span>
+            <span>720P 清晰版</span>
+            <span>支持微信内播放</span>
+          </div>
+        </div>
+        <div class="video-frame">
+          <video
+            id="demoVideo"
+            controls
+            playsinline
+            webkit-playsinline
+            preload="metadata"
+            poster="media/video-poster.jpg"
+            aria-label="适老化安全马甲作品演示视频"
+          >
+            <source src="media/适老化马甲演示视频_web.mp4" type="video/mp4">
+            您的浏览器暂不支持视频播放，请升级微信或浏览器后重试。
+          </video>
+          <button class="video-cover" id="videoCover" type="button" aria-label="播放作品演示视频">
+            <span class="play-control" aria-hidden="true">
+              <svg width="28" height="34" viewBox="0 0 28 34" fill="none">
+                <path d="M27 15.27c1.33.77 1.33 2.69 0 3.46L3 32.02C1.67 32.79 0 31.83 0 30.29V3.71C0 2.17 1.67 1.21 3 1.98L27 15.27Z" fill="white"/>
+              </svg>
+            </span>
+            <span class="video-cover-text">
+              <span id="videoCoverLabel">点击播放作品演示</span>
+              <span class="video-duration">58 秒</span>
+            </span>
+          </button>
+        </div>
+      </section>
 
       <section class="demo-layout" aria-label="适老化马甲交互演示">
         <div class="phone">
@@ -1170,6 +1348,9 @@
       const resetButton = document.getElementById("resetDemo");
       const phoneTime = document.getElementById("phoneTime");
       const browserBadge = document.getElementById("browserBadge");
+      const demoVideo = document.getElementById("demoVideo");
+      const videoCover = document.getElementById("videoCover");
+      const videoCoverLabel = document.getElementById("videoCoverLabel");
       const eventButtons = [...document.querySelectorAll("[data-event]")];
       let eventHistory = [];
       let toastTimer;
@@ -1335,6 +1516,32 @@
       resetButton.addEventListener("click", () => {
         resetDemo();
         showToast("演示已重置");
+      });
+
+      videoCover.addEventListener("click", async () => {
+        videoCover.classList.add("is-hidden");
+        try {
+          await demoVideo.play();
+        } catch {
+          videoCover.classList.remove("is-hidden");
+          videoCoverLabel.textContent = "点击继续播放";
+          showToast("请再点一次播放按钮");
+        }
+      });
+
+      demoVideo.addEventListener("play", () => {
+        videoCover.classList.add("is-hidden");
+      });
+
+      demoVideo.addEventListener("pause", () => {
+        if (!demoVideo.ended && demoVideo.currentTime > 0) return;
+        videoCoverLabel.textContent = demoVideo.ended ? "重新播放作品演示" : "点击播放作品演示";
+        videoCover.classList.remove("is-hidden");
+      });
+
+      demoVideo.addEventListener("ended", () => {
+        videoCoverLabel.textContent = "重新播放作品演示";
+        videoCover.classList.remove("is-hidden");
       });
 
       if (/MicroMessenger/i.test(navigator.userAgent)) {
